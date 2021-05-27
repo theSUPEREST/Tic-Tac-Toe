@@ -1,0 +1,35 @@
+/* global */
+
+h1 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* helpers */
+
+.flex-parent-columns {
+    display: flex;
+    flex-direction: column;
+}
+
+.align-ctr {
+    align-items: center;
+}
+
+/* classes */
+
+.gameboard {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    height: 500px;
+    width: 500px;
+    background-color: rgb(0, 0, 0); /*for testing*/
+    gap: 10px;
+}
+
+.gameboard div {
+    background-color: white;
+}
+
