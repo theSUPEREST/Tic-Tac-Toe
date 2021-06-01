@@ -10,16 +10,23 @@ const gameboard = (() => {
         cell.textContent = boardPositions[i]; 
         }
     }
-
+    
+    const cells = document.querySelectorAll('div.cell');
+    cells.forEach(item => item.addEventListener('click', event => {
+        console.log(event.target);
+    }))
+    
     return {render};
 })();
 
 
 
-const Player = () => {
+const Player = (name, mark) => {
     // enter their name
+    const getName = () => name;
     // pick x or o as their piece
-    // click a square and add their piece
+    const getMark = () => mark;
+    return {getName, getMark}
 }
 
 // game logic
