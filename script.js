@@ -3,34 +3,70 @@
     // render player moves
     // restart game, clear all cells
 const gameboard = (() => {
-    const boardPositions = ['X',null,'X','O','X','O','X','O','X'];
+    let boardPositions = [null,'X','X','O','X','O','X','O','X'];
+    
     const render = function() {
         for (let i = 0; i < boardPositions.length; i++) {
         const cell = document.getElementById(`${i}`);
+        cell.innerHTML = ""; 
         cell.textContent = boardPositions[i]; 
         }
     }
     
-    const cells = document.querySelectorAll('div.cell');
-    cells.forEach(item => item.addEventListener('click', event => {
-        console.log(event.target);
-    }))
+    const reset = () => {
+        gameboard.boardPositions = boardPositions.map(item => item = null)
+    }
     
-    return {render};
+    return {render, boardPositions, reset};
 })();
 
 
-
 const Player = (name, mark) => {
-    // enter their name
-    const getName = () => name;
-    // pick x or o as their piece
-    const getMark = () => mark;
-    return {getName, getMark}
+    return {name, mark}
 }
 
+const player1 = Player('P1', 'X');
+const player2 = Player('P2', 'O');
+
+
 // game logic
-// if 3 in a row, game over. player that has letter which is 3 in a row wins
+const game = (() => {
+    // if 3 in a row, game over. player that has letter which is 3 in a row wins
+    const win = () => {
+        if (gameboard.boardPositions[0] === gameboard.boardPositions[1] && gameboard.boardPositions[0] === gameboard.boardPositions[2]) {
+            console.log("3 in a row")
+        }
+    }
+
+    //Change turns (default P1 goes first)
+
+    let turnPlayer = player1;
+
+    const changeTurn = () => {
+        if (turnPlayer === player1) {
+            turnPlayer = player2
+        } else {
+            turnPlayer = player1
+        }
+    }
+    const turnTest = () => turnPlayer.mark
+    
+    const cells = document.querySelectorAll('div.cell');
+    //cells.forEach(item => {
+    //    if (!item) {
+    //        item.addEventListener('click', event => {
+    //            console.log(event.target.id);
+    //        })
+    //    }
+    //})
+    
+    cells.forEach(item => item.addEventListener('click', event => {
+        gameboard.boardPositions[event.target.id] = game.turnTest()
+        gameboard.render()
+    }))
+
+    return {win, turnTest, changeTurn}
+})();
 // if all cells are filled, and no 3 in a row, draw game
 // alternates players turns, first X then O alternating. (or O then X)
 // cannot select a cell that already has a value
