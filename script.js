@@ -8,13 +8,13 @@ const gameboard = (() => {
     const render = function() {
         for (let i = 0; i < boardPositions.length; i++) {
         const cell = document.getElementById(`${i}`);
-        cell.innerHTML = ""; 
-        cell.textContent = boardPositions[i]; 
+        cell.textContent = gameboard.boardPositions[i]; 
         }
     }
     
     const reset = () => {
-        gameboard.boardPositions = boardPositions.map(item => item = null)
+        gameboard.boardPositions = boardPositions.map(item => item = null);
+        render();
     }
     
     return {render, boardPositions, reset};
