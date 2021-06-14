@@ -3,7 +3,7 @@
     // render player moves
     // restart game, clear all cells
 const gameboard = (() => {
-    let boardPositions = [null,'X','X','O','X','O','X','O','X'];
+    let boardPositions = [null, null, null, null, null, null, null, null, null];
     
     const render = function() {
         for (let i = 0; i < boardPositions.length; i++) {
@@ -49,8 +49,7 @@ const game = (() => {
             turnPlayer = player1
         }
     }
-    const turnTest = () => turnPlayer.mark
-    
+        
     const cells = document.querySelectorAll('div.cell');
     //cells.forEach(item => {
     //    if (!item) {
@@ -61,11 +60,15 @@ const game = (() => {
     //})
     
     cells.forEach(item => item.addEventListener('click', event => {
-        gameboard.boardPositions[event.target.id] = game.turnTest()
+        if (gameboard.boardPositions[event.target.id]) {
+            return;
+        }
+        gameboard.boardPositions[event.target.id] = turnPlayer.mark;
+        changeTurn();
         gameboard.render()
     }))
 
-    return {win, turnTest, changeTurn}
+    return {win, changeTurn}
 })();
 // if all cells are filled, and no 3 in a row, draw game
 // alternates players turns, first X then O alternating. (or O then X)
